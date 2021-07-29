@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCalendarIslamicCivil } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { setLanguage } from '../ngrx/actions/language.actions';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
+
 export class NavigationComponent implements OnInit {
+  language$: Observable<string>;
 
-  model = {
-    left: true,
-    middle: false,
-    right: false
-  };
-
-  language : string = 'EN';
-
-  handleLanguageChange (lang: string){
-    this.language = lang;
+  constructor(private store: Store<{ language: string }>) {
+    this.language$ = store.select('language');
   }
-
-  constructor() { }
 
   ngOnInit(): void {
   }
 
+  handleLanguageChange(language: string) {
+    this.store.dispatch(setLanguage({ language }));
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  language$: Observable<string>;
+
+  constructor(private store: Store<{ language: string }>) {
+    this.language$ = store.select('language');
+  }
 
   ngOnInit(): void {
   }
